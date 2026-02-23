@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, MessageSquare, Briefcase, Globe } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,10 +12,38 @@ const Contact: React.FC = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thanks for reaching out! We'll get back to you within 24 hours.");
-  };
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const { error } = await supabase
+      .from('contacts')
+      .insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          service: formData.service,
+          message: formData.message
+        }
+      ]);
+
+    if (error) throw error;
+
+    alert("✅ Message sent! We'll get back to you within 24 hours.");
+
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      service: 'Web Development',
+      message: ''
+    });
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Failed to send message. Please try again.");
+  }
+};
 
   return (
     <div className="pt-32 pb-24">
@@ -33,7 +62,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg mb-1">Email Us</h4>
-                  <p className="text-gray-400">codebyt123@gmail.com</p>
+                  <p className="text-gray-400">Codebytdigital@gmail.com</p>
                 </div>
               </div>
               <div className="flex gap-6 items-start">
@@ -43,6 +72,7 @@ const Contact: React.FC = () => {
                 <div>
                   <h4 className="font-bold text-lg mb-1">Call Us</h4>
                   <p className="text-gray-400">+91 97184 17771</p>
+                  <p className="text-gray-400">+91 99250 97911</p>
                 </div>
               </div>
               <div className="flex gap-6 items-start">

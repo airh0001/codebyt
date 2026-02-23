@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PORTFOLIO } from '../constants';
 import { ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState('All');
@@ -175,9 +176,11 @@ const Portfolio: React.FC = () => {
             <p className="text-gray-400 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
               Every great project starts with a conversation. Let's discuss how we can bring your digital vision to life with precision and craftsmanship.
             </p>
-            <button className="px-12 py-5 bg-purple-600 text-white rounded-full font-black text-lg hover:bg-white hover:text-black transition-all shadow-xl shadow-purple-600/20 active:scale-95">
-              Start Your Project
-            </button>
+            <Link to="/contact">
+              <button className="px-12 py-5 bg-purple-600 text-white rounded-full font-black text-lg hover:bg-white hover:text-black transition-all shadow-xl shadow-purple-600/20 active:scale-95">
+                Start Your Project
+              </button>
+            </Link>
           </div>
         </motion.div>
       </div>
